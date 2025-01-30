@@ -22,6 +22,10 @@ const Login = () => {
   })
   }
 
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+    }
+
   console.log("data login", data)
 
 
@@ -33,7 +37,7 @@ const Login = () => {
             <img src={loginIcons} alt="loginIcon" />
           </div>
 
-          <form className="w-full max-w-md mx-auto pt-8">
+          <form className="w-full max-w-md mx-auto pt-8" onSubmit={handleSubmit}>
             <div className="grid">
               <label>Email</label>
             </div>
