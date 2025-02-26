@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import loginIcons from '../assest/signin.gif'
 import { FaEye } from 'react-icons/fa'
 import { FaEyeSlash } from 'react-icons/fa'
+import imageToBase64 from '../helper/imageToBase64'
 
 const SignUp = () => {
       const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +24,21 @@ const SignUp = () => {
         });
       };
 
+      const handleUploadPic = async (e) =>{
+        const file = e.target.files[0];
+        
+        const imagePic = await imageToBase64(file)
+        console.log("imagePic", imagePic)
+        setData((preve)=>{
+          return{
+            ...preve,
+            profilePic: imagePic
+
+          }
+        })
+
+      }
+
       const handleSubmit = (e) => {
         e.preventDefault();
       };
@@ -33,8 +49,18 @@ const SignUp = () => {
     <section id="signup">
       <div className="mx-auto container p-7">
         <div className="bg-white p-4 py-5 w-full max-w-md mx-auto">
-          <div className="w-20 h-20 mx-auto">
-            <img src={loginIcons} alt="loginIcon" />
+          <div className="w-20 h-20 mx-auto relative overflow-hidden rounded-full">
+            <div>
+              <img src={data.profilePic||loginIcons} alt="loginIcon" />
+            </div>
+            <form>
+              <label>
+              <div className="text-xs bg-opacity-75 bg-slate-300 py-2 pb-2 pt-1 cursor-pointer text-center absolute bottom-0 w-full">
+                Upload Picture
+              </div>
+              <input type="file" className="hidden"  onChange={handleUploadPic}/>
+              </label>
+            </form>
           </div>
 
           <form
@@ -52,6 +78,7 @@ const SignUp = () => {
                 name="name"
                 value={data.name}
                 onChange={handleOnChange}
+                required
               />
             </div>
             <div></div>
@@ -66,6 +93,7 @@ const SignUp = () => {
                 name="email"
                 value={data.email}
                 onChange={handleOnChange}
+                required
               />
             </div>
             <div>
@@ -76,9 +104,10 @@ const SignUp = () => {
                 type={showPassword ? "" : "password"}
                 placeholder="Enter Password"
                 className="w-full h-full outline-none bg-transparent"
-                name="password"
+                name="Enter Password"
                 value={data.password}
                 onChange={handleOnChange}
+                required
               />
               <div className="flex justify-between items-center">
                 <div className="cursor-pointer">
@@ -96,11 +125,12 @@ const SignUp = () => {
             <div className="bg-slate-200 p-4 flex">
               <input
                 type={showPassword ? "" : "password"}
-                placeholder="Enter Password"
+                placeholder="Enter Confirm Password"
                 className="w-full h-full outline-none bg-transparent"
-                name="password"
+                name="Enter Confirm Password"
                 value={data.password}
                 onChange={handleOnChange}
+                required
               />
               <div className="flex justify-between items-center">
                 <div className="cursor-pointer">
@@ -122,7 +152,7 @@ const SignUp = () => {
               type="submit"
               className="bg-red-500 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[140px] rounded-full hover:scale-105 "
             >
-             Sign Up
+              Sign Up
             </button>
           </form>
           <div className="flex justify-center items-center mt-4">
