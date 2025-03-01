@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
@@ -14,6 +14,7 @@ const Header = () => {
   console.log("user header", user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [menuDisplay,setMenuDisplay] = useState(false)
 
 
  const handleLogout = async () => {
@@ -54,8 +55,11 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-8 ">
-          <div>
-            <div className="relative group ">
+          <div className="relative  flex justify-center">
+            <div
+              className="text-3xl cursor-pointer relative flex justify-center"
+              onClick={() => setMenuDisplay((preve) => !preve)}
+            >
               {user?.profilePic ? (
                 <img
                   src={user.profilePic}
@@ -66,11 +70,18 @@ const Header = () => {
                 <FaUser className="text-2xl cursor-pointer " />
               )}
             </div>
-            <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded group-hover:block">
-              <nav>
-                <Link to={"admin-panel"} className="whitespace-nowrap hover:bg-slate-100 p-2">Admin Panel</Link> 
-              </nav>
-            </div>
+            {menuDisplay && (
+              <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded">
+                <nav>
+                  <Link
+                    to={"admin-panel"}
+                    className="whitespace-nowrap hover:bg-slate-100 p-2"
+                  >
+                    Admin Panel
+                  </Link>
+                </nav>
+              </div>
+            )}
           </div>
           <div>
             <span>
