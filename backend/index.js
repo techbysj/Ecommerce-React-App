@@ -1,21 +1,33 @@
-const express = require ("express")
-const cors = require("cors")
-require('dotenv').config()
-const connectDB = require("./config/db")
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
+const connectDB = require("./config/db");
+const router = require("./routes");
+
+const app = express();
 
 
-const app = express()
-app.use(cors())
+app.use(
+  cors({
+    origin:
+      process.env.FRONTEND_URL?.replace(/\/$/, "") || "http://localhost:3001",
+    credentials: true,
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 
-const PORT = 8088 || process.env.PORT
+app.use(express.json());
+app.use(cookieParser());
 
-connectDB()
+app.use("/api", router);
 
-app.listen(PORT, ()=>{
-    console.log("Server is running")
-})
+const PORT = process.env.PORT || 5555;
 
-
-
-
-
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("connnect to DB");
+    console.log("Server is running " + PORT);
+  });
+});

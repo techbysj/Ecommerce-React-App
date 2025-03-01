@@ -3,13 +3,42 @@ import Logo from "./Logo";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import SummaryApi from "../common";
+import { toast } from "react-toastify";
+import { setUserDetails } from "../store/userSlice";
 
 const Header = () => {
+  const user = useSelector((state) => state?.user?.user);
+  console.log("user header", user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+ const handleLogout = async () => {
+   const fetchData = await fetch(SummaryApi.logout_user.url, {
+     method: SummaryApi.logout_user.method,
+     credentials: "include",
+   });
+
+   const data = await fetchData.json();
+
+   if (data.success) {
+     toast.success(data.message);
+     dispatch(setUserDetails(null));
+     navigate("/");
+   }
+
+   if (data.error) {
+     toast.error(data.message);
+   }
+ };
+
   return (
     <header className="h-16 shadow-md bg-white">
       <div className="h-full container mx-auto flex items-center px-2 justify-between">
-         <Link to="/">
+        <Link to="/">
           <Logo w={120} h={60} />
         </Link>
 
@@ -24,9 +53,24 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-8 ">
           <div>
-            <FaUser className="text-2xl cursor-pointer " />
+            <div className="relative group ">
+              {user?.profilePic ? (
+                <img
+                  src={user.profilePic}
+                  className="w-10 h-10 rounded-full"
+                  alt={user?.name}
+                />
+              ) : (
+                <FaUser className="text-2xl cursor-pointer " />
+              )}
+            </div>
+            <div className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded group-hover:block">
+              <nav>
+                <Link to={"admin-panel"} className="whitespace-nowrap hover:bg-slate-100 p-2">Admin Panel</Link> 
+              </nav>
+            </div>
           </div>
           <div>
             <span>
@@ -37,11 +81,21 @@ const Header = () => {
             </div>
           </div>
           <div>
-            <Link to="/login">
-            <button className="bg-red-500 text-white  hover:bg-red-300 px-4 py-2 rounded-full">
-              Login
-            </button>
-            </Link>
+            {user?._id ? (
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 text-white hover:bg-red-300 px-4 py-2 rounded-full"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to={"/login"}
+                className="bg-red-500 text-white hover:bg-red-300 px-4 py-2 rounded-full"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
