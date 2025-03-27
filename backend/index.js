@@ -7,14 +7,10 @@ const router = require("./routes");
 
 const app = express();
 
-
 app.use(
   cors({
-    origin:
-      process.env.FRONTEND_URL?.replace(/\/$/, "") || "http://localhost:3001",
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
     credentials: true,
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
   })
 );
 
@@ -27,7 +23,7 @@ const PORT = process.env.PORT || 5555;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("connnect to DB");
-    console.log("Server is running " + PORT);
+    console.log("Connected to DB");
+    console.log("Server is running on PORT " + PORT);
   });
 });

@@ -3,9 +3,17 @@ import SummaryApi from "../common";
 import { toast } from "react-toastify";
 import moment from "moment";
 import { MdModeEdit } from "react-icons/md";
+import ChangeUserRole from "../components/ChangeUserRole";
 
 const AllUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
+  const [openUpdateRole, setOpenUpdateRole] = useState(false);
+  const [updateUserDetails, setUpdateUserDetails] = useState({
+    email: "",
+    name: "",
+    role: "",
+    _id: "",
+  });
 
   const fetchAllUsers = async () => {
     try {
@@ -23,7 +31,6 @@ const AllUsers = () => {
       }
     } catch (error) {
       toast.error("Failed to fetch users.");
-      console.error("Fetch error:", error);
     }
   };
 
@@ -46,14 +53,22 @@ const AllUsers = () => {
         </thead>
         <tbody>
           {allUsers.map((el, index) => (
-            <tr key={el._id}>
+            <tr key={el._id || index}>
+              {" "}
+              {/* ✅ Added unique key */}
               <td>{index + 1}</td>
               <td>{el?.name}</td>
               <td>{el?.email}</td>
               <td>{el?.role}</td>
               <td>{moment(el?.createdAt).format("LL")}</td>
               <td>
-                <button className="bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green-500 hover:text-white">
+                <button
+                  className="bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green-500 hover:text-white"
+                  onClick={() => {
+                    setUpdateUserDetails(el);
+                    setOpenUpdateRole(true);
+                  }}
+                >
                   <MdModeEdit />
                 </button>
               </td>
@@ -61,6 +76,17 @@ const AllUsers = () => {
           ))}
         </tbody>
       </table>
+
+      {openUpdateRole && (
+        <ChangeUserRole
+          onClose={() => setOpenUpdateRole(false)}
+          name={updateUserDetails.name}
+          email={updateUserDetails.email}
+          role={updateUserDetails.role}
+          userId={updateUserDetails._id}
+          callFunc={fetchAllUsers}
+        />
+      )}
     </div>
   );
 };

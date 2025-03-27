@@ -10,37 +10,33 @@ import { useDispatch } from "react-redux";
 import { setUserDetails } from "./store/userSlice";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   const fetchUserDetails = async () => {
     const dataResponse = await fetch(SummaryApi.current_user.url, {
       method: SummaryApi.current_user.method,
       credentials: "include",
     });
     const dataApi = await dataResponse.json();
-    // console.log("data-user", dataResponse);
 
     if (dataApi.success) {
-       dispatch(setUserDetails(dataApi.data));
+      dispatch(setUserDetails(dataApi.data));
     }
   };
-
   useEffect(() => {
-    // fetchUserDetails()
+    fetchUserDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <Context.Provider
-        value={{
-          fetchUserDetails,
-        }}
-      >
-      <ToastContainer />
-      <Header />
-      <main className="min-h-[calc(100vh-120px)]">
-        <Outlet />
-      </main>
-      <Footer />
+      <Context.Provider value={{ fetchUserDetails }}>
+        <ToastContainer />
+        <Header />
+        <main className="min-h-[calc(100vh-120px)]">
+          <Outlet />
+        </main>
+        <Footer />
       </Context.Provider>
     </>
   );
