@@ -1,6 +1,7 @@
 import React from 'react'
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useSelector } from 'react-redux';
+import { Link, Outlet } from 'react-router-dom';
 
 const AdminPanel = () => {
 
@@ -8,7 +9,7 @@ const AdminPanel = () => {
 
 
   return (
-    <div className="min-h-[calc(100vh-120px)] flex">
+    <div className="min-h-[calc(100vh-120px)] md:flex hidden">
       <aside className="bg-white min-h-full w-full max-w-60 customShadow">
         <div className="bg-slate-300 h-40 flex justify-center items-center flex-col">
           <div className="text-5xl cursor-pointer relative flex justify-center">
@@ -22,12 +23,37 @@ const AdminPanel = () => {
               <IoPersonCircleOutline />
             )}
           </div>
-            <h1 className="capitalize text-xl font-semibold">{user?.name}</h1>
-            <p className='text-sm'>{user?.role}</p>
+          <h1 className="capitalize text-xl font-semibold">{user?.name}</h1>
+          <p className="text-sm">{user?.role}</p>
         </div>
+        {/* {***navigation***} */}
+        <nav className="p-4 grid">
+          <Link
+            className="p-2 hover:bg-slate-100 cursor-pointer"
+            to={"/admin-panel"}
+          >
+            Dashboard
+          </Link>
+          <Link
+            className="p-2 hover:bg-slate-100 cursor-pointer"
+            to={"all-users"}
+            >
+            All Users
+          </Link>
+
+          <Link
+            className="p-2 hover:bg-slate-100 cursor-pointer"
+            to={"all-products"}
+          >
+            All Products
+          </Link>
+          <Link className="p-2 hover:bg-slate-100 cursor-pointer">Orders</Link>
+        </nav>
       </aside>
 
-      <main></main>
+      <main className='w-full h-full p-5'>
+        <Outlet />
+      </main>
     </div>
   );
 }

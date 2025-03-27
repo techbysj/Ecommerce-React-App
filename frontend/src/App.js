@@ -17,7 +17,7 @@ function App() {
       credentials: "include",
     });
     const dataApi = await dataResponse.json();
-    console.log("data-user", dataResponse);
+    // console.log("data-user", dataResponse);
 
     if (dataApi.success) {
        dispatch(setUserDetails(dataApi.data));

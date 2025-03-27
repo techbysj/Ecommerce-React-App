@@ -11,7 +11,7 @@ import { setUserDetails } from "../store/userSlice";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
-  console.log("user header", user);
+  // console.log("user header", user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [menuDisplay,setMenuDisplay] = useState(false)
@@ -75,7 +75,7 @@ const Header = () => {
                 <nav>
                   <Link
                     to={"admin-panel"}
-                    className="whitespace-nowrap hover:bg-slate-100 p-2"
+                    className="whitespace-nowrap hover:bg-slate-100 hidden md:block p-2"
                     onClick={() => setMenuDisplay((preve) => !preve)}
                   >
                     Admin Panel
