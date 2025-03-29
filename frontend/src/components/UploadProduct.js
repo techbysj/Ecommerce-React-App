@@ -58,9 +58,9 @@ const UploadProduct = ({ onClose, fetchData }) => {
     });
   };
 
-  {
-    /**upload product */
-  }
+//   {
+//     /**upload product */
+//   }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
