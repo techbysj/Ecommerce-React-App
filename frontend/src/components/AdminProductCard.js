@@ -13,6 +13,7 @@ const AdminProductCard = ({ data, fetchdata }) => {
           <img
             src={data?.productImage[0]}
             className="mx-auto object-fill h-full"
+            alt={data.productName}
           />
         </div>
         <h1 className="text-ellipsis line-clamp-2">{data.productName}</h1>
