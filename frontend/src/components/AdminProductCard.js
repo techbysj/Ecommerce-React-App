@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { MdModeEditOutline } from "react-icons/md";
 import AdminEditProduct from "./AdminEditProduct";
-import displayINRCurrency from "../helpers/displayCurrency";
+import displayINRCurrency from "../helper/displayCurrency";
+// import displayINRCurrency from "../helpers/displayCurrency";
 
 const AdminProductCard = ({ data, fetchdata }) => {
   const [editProduct, setEditProduct] = useState(false);

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { CgClose } from "react-icons/cg";
-import productCategory from "../helpers/productCategory";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import uploadImage from "../helpers/uploadImage";
-import DisplayImage from "./DisplayImage";
 import { MdDelete } from "react-icons/md";
 import SummaryApi from "../common";
 import { toast } from "react-toastify";
+import uploadImage from "../helper/uploadImage";
+import productCategory from "../helper/productCategory";
+import DisplayImage from "./DisplayImage";
 
 const AdminEditProduct = ({ onClose, productData, fetchdata }) => {
   const [data, setData] = useState({
