@@ -38,7 +38,7 @@ const Header = () => {
  };
 
   return (
-    <header className="h-16 shadow-md bg-white fixed w-full">
+    <header className="h-16 shadow-md bg-white fixed w-full z-40">
       <div className="h-full container mx-auto flex items-center px-2 justify-between">
         <Link to="/">
           <Logo w={120} h={60} />

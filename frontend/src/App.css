@@ -18,12 +18,3 @@
     display: none;
 }
 
-header {
-  height: 64px; /* Adjust to match your actual header height */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 50; /* Ensures it's above other elements */
-  background-color: white; /* Prevents transparency */
-}
