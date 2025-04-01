@@ -1,4 +1,4 @@
-const UserModel = require("../models/userModel"); // ✅ Import userModel
+const UserModel = require("../../models/userModel"); // ✅ Import userModel
 
 async function allUsers(req, res) {
   try {
