@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-// const userSignUpController = require("../controller/userSignUp");
-// const userSignInController = require("../controller/userSignIn");
+
 const authToken = require("../middleware/authToken");
-// const userDetailsController = require("../controller/userDetails");
 const userLogout = require("../controller/user/userLogout");
 const allUsers = require("../controller/user/allUsers");
 const updateUser = require("../controller/user/updateUser");
