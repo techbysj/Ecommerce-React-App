@@ -1,4 +1,6 @@
 # Ecommerce-React-App
+<img width="1671" alt="Screenshot 2025-04-02 at 14 20 34" src="https://github.com/user-attachments/assets/79e13502-41ad-441d-8161-c574f23a7014" />
+
 
 ## Overview
 This is a **MERN Fullstack E-commerce Application** with an **Admin Dashboard** and all essential e-commerce functionalities. The project includes a fully operational online store with user authentication, product management, order processing, and payment integration.
@@ -16,12 +18,20 @@ This is a **MERN Fullstack E-commerce Application** with an **Admin Dashboard** 
 - **Sign Up / Login**: Allows users to create an account or log in.
 - **JWT Authentication**: Secure token-based authentication.
 - **User Profile Management**: Users can update profile details.
+- ADMIN PASSWORD BELOW:
+ <img width="1680" alt="Screenshot 2025-04-02 at 14 20 52" src="https://github.com/user-attachments/assets/07a388ed-44fa-43c9-b438-b5907435ad28" />
+
 
 ### 🛍 **Admin Dashboard**
 - **Product Management**: Add, update, or delete products.
 - **User Management**: View, update, or delete user accounts.
 - **Order Management**: Process, ship, and manage orders.
 - **Sales Analytics**: Track revenue and user activity.
+  <img width="1680" alt="Screenshot 2025-04-02 at 14 21 31" src="https://github.com/user-attachments/assets/a5d66516-bef6-40fd-b359-4460ed36acbb" />
+  <img width="1680" alt="Screenshot 2025-04-02 at 14 21 16" src="https://github.com/user-attachments/assets/8bdca9df-9e47-4782-8eac-4b00aca71817" />
+
+
+
 
 
 ### 🌎 **UI & UX Features**
