@@ -1,4 +1,5 @@
-const backendDomain = "https://ecommerce-react-app-hg5y.onrender.com"; 
+const backendDomain =
+  "https://ecommerce-react-app-hg5y.onrender.com" || "http://localhost:5555"; 
 
 
 const SummaryApi = {
