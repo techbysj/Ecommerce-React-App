@@ -72,7 +72,7 @@ This is a **MERN Fullstack E-commerce Application** with an **Admin Dashboard** 
    ```
 
 ## Live Demo
-[Click here to view the live demo](#)
+[Click here to view the live demo](https://techbysj-electronics-store.netlify.app/)
 
 ## Future Improvements
 - Implement AI-powered product recommendations.
