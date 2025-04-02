@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import fetchCategoryWiseProduct from "../helpers/fetchCategoryWiseProduct";
-import displayINRCurrency from "../helpers/displayCurrency";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import fetchCategoryWiseProduct from "../helper/fetchCategoryWiseProduct";
+import displayINRCurrency from "../helper/displayCurrency";
 // import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import addToCart from "../helpers/addToCart";
+import addToCart from "../helper/addToCart";
 import Context from "../context";
-import scrollTop from "../helpers/scrollTop";
+import scrollTop from "../helper/scrollTop";
 
 const CategroyWiseProductDisplay = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -19,18 +19,18 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
     fetchUserAddToCart();
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-    const categoryProduct = await fetchCategoryWiseProduct(category);
-    setLoading(false);
+ const fetchData = useCallback(async () => {
+   setLoading(true);
+   const categoryProduct = await fetchCategoryWiseProduct(category);
+   setLoading(false);
+   console.log("horizontal data", categoryProduct.data);
+   setData(categoryProduct?.data);
+ }, [category]); // Add dependencies if needed
 
-    console.log("horizontal data", categoryProduct.data);
-    setData(categoryProduct?.data);
-  };
+ useEffect(() => {
+   fetchData();
+ }, [fetchData]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <div className="container mx-auto px-4 my-6 relative">
@@ -43,13 +43,18 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
                 <div className="w-full min-w-[280px]  md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white rounded-sm shadow ">
                   <div className="bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse"></div>
                   <div className="p-4 grid gap-3">
-                    <h2 className="font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black p-1 py-2 animate-pulse rounded-full bg-slate-200"></h2>
+                    <h2 className="font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black p-1 py-2 animate-pulse rounded-full bg-slate-200">
+                      {heading || "Category Products"}
+                    </h2>
                     <p className="capitalize text-slate-500 p-1 animate-pulse rounded-full bg-slate-200  py-2"></p>
                     <div className="flex gap-3">
                       <p className="text-red-600 font-medium p-1 animate-pulse rounded-full bg-slate-200 w-full  py-2"></p>
                       <p className="text-slate-500 line-through p-1 animate-pulse rounded-full bg-slate-200 w-full  py-2"></p>
                     </div>
-                    <button className="text-sm  text-white px-3  rounded-full bg-slate-200  py-2 animate-pulse"></button>
+                    <button className="text-sm  text-white px-3  rounded-full bg-slate-200  py-2 animate-pulse"
+                    >
+                        {heading || "Category Products"}
+                    </button>
                   </div>
                 </div>
               );
@@ -65,7 +70,7 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
                     <img
                       src={product.productImage[0]}
                       className="object-scale-down h-full hover:scale-110 transition-all mix-blend-multiply"
-                        alt={product?.productName}
+                      alt={product?.productName}
                     />
                   </div>
                   <div className="p-4 grid gap-3">
