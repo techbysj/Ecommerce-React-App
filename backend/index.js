@@ -24,11 +24,22 @@ app.use(limiter);
 // Logger
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
-// CORS configuration
+// Enhanced CORS configuration
+const allowedOrigins = process.env.FRONTEND_URL
+  ? process.env.FRONTEND_URL.split(",")
+  : ["http://localhost:3000"];
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL
-    ? process.env.FRONTEND_URL.split(",")
-    : "http://localhost:3000",
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
@@ -36,8 +47,14 @@ const corsOptions = {
     "Authorization",
     "X-Requested-With",
     "Accept",
+    "X-CSRF-Token",
   ],
+  exposedHeaders: ["Set-Cookie", "Date", "ETag"],
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
+
+// Enable pre-flight requests for all routes
+app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 
 // Body parsers
@@ -60,22 +77,30 @@ app.use("*", (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    message: "Something went wrong!",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined,
-  });
+  if (err.name === "UnauthorizedError") {
+    res.status(401).json({ error: "Invalid token" });
+  } else if (err.message === "Not allowed by CORS") {
+    res.status(403).json({ error: "CORS policy blocked this request" });
+  } else {
+    console.error(err.stack);
+    res.status(500).json({
+      message: "Something went wrong!",
+      error: process.env.NODE_ENV === "development" ? err.message : undefined,
+    });
+  }
 });
 
 const PORT = process.env.PORT || 5555;
+let server;
 
 // Database connection and server start
 connectDB()
   .then(() => {
-    app.listen(PORT, () => {
+    server = app.listen(PORT, () => {
       console.log(`Connected to DB`);
       console.log(`Server is running on PORT ${PORT}`);
       console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
+      console.log(`Allowed origins: ${allowedOrigins.join(", ")}`);
     });
   })
   .catch((err) => {
@@ -86,6 +111,9 @@ connectDB()
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (err) => {
   console.error("Unhandled Rejection:", err);
-  // Close server & exit process
-  server.close(() => process.exit(1));
+  if (server) {
+    server.close(() => process.exit(1));
+  } else {
+    process.exit(1);
+  }
 });
