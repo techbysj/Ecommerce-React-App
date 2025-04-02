@@ -23,9 +23,6 @@ This is a **MERN Fullstack E-commerce Application** with an **Admin Dashboard** 
 - **Order Management**: Process, ship, and manage orders.
 - **Sales Analytics**: Track revenue and user activity.
 
-### 💳 **Payment Integration**
-- **Stripe or PayPal Support**: Secure payment processing.
-- **Order Confirmation**: Displays order summary after successful checkout.
 
 ### 🌎 **UI & UX Features**
 - **Fully Responsive Design**: Works seamlessly across all devices.
