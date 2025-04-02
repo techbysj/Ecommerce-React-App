@@ -31,6 +31,7 @@ app.use(
 const allowedOrigins = [
   "https://techbysj-electronics-store.netlify.app",
   "http://localhost:3000",
+  "https://ecommerce-react-app-hg5y.onrender.com", // ADD THIS
 ];
 
 const corsOptions = {
