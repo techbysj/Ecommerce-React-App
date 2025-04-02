@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import scrollTop from "../helpers/scrollTop";
+import scrollTop from "../helper/scrollTop";
 import Context from "../context";
 import { Link } from "react-router-dom";
 import displayINRCurrency from "../helper/displayCurrency";
