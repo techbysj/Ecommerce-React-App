@@ -27,7 +27,7 @@ jobs:
           cd backend
           npm test
       
-      - name: Run Jest Tests (Frontend)
+      - name: Run React Tests for Frontend
         run: |
           cd frontend
           npm test
